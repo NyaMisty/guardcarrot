@@ -17,10 +17,7 @@ jobs:
       - name: build
         run: |
           echo "GO111MODULE=on" >> $GITHUB_ENV
-          GOOS=windows GOARCH=amd64 go build -o bin/ci-test-windows-amd64.exe
-          GOOS=linux   GOARCH=amd64 go build -o bin/ci-test-linux-amd64
-          GOOS=darwin  GOARCH=amd64 go build -o bin/ci-test-macos-amd64
-          GOOS=ios  GOARCH=arm64 go build -o bin/ci-test-ios-arm64
+          CGO_ENABLED=1 GOOS=ios  GOARCH=arm64 go build -o bin/ci-test-ios-arm64
       - name: upload artifacts
         uses: actions/upload-artifact@master
         with:
