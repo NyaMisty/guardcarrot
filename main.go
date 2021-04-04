@@ -88,7 +88,7 @@ func encrypt(v []uint32, k []uint32) []uint32 {
 }
 
 func main() {
-	o, err := os.Open("GUI2.dll")
+	o, err := os.Open("DECRYPT_GUI2.dll")
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		return
@@ -110,7 +110,7 @@ func main() {
 	// decrypt GUI2.dll
 	key2 := []byte{0xD2, 0xC5, 0xAA, 0x6A, 0xB6, 0xCD, 0x22, 0xCD, 0x94, 0x0A, 0x26, 0x9B, 0x10, 0xA4, 0xB5, 0x12}
 
-	d, err := os.Create("DECRYPT_GUI2.dll")
+	d, err := os.Create("GUI2.dll")
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		return
@@ -119,7 +119,7 @@ func main() {
 	// 1024为一组不能任意修改否则加密文件就不对了
 	for i := 0; i < len(b); i += 0x400 {
 		// 加密只需要将解密文件 调用encrypt加密回去即可
-		de := toBytes(decrypt(toUint32s(b[i:i+0x400]), toUint32s(key2)))
+		de := toBytes(encrypt(toUint32s(b[i:i+0x400]), toUint32s(key2)))
 		if _, err := d.Write(de); err != nil {
 			fmt.Printf("error %s\n", err)
 			return
